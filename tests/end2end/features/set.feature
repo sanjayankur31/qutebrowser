@@ -7,7 +7,7 @@ Feature: Setting settings.
 
     Scenario: Using :set
         When I run :set colors.statusbar.normal.bg magenta
-        Then colors.statusbar.normal.bg should be magenta
+        Then colors.statusbar.normal.bg should be set to magenta
 
     Scenario: Without value
         When I run :set colors.statusbar.normal.bg
@@ -20,7 +20,7 @@ Feature: Setting settings.
     Scenario: Toggling an option
         When I run :set auto_save.config false
         And I run :set auto_save.config!
-        Then auto_save_config should be true
+        Then auto_save_config should be set to true
 
     Scenario: Toggling a non-bool option
         When I run :set colors statusbar.bg!
@@ -29,22 +29,22 @@ Feature: Setting settings.
     Scenario: Cycling an option
         When I run :set colors statusbar.bg magenta
         And I run :set colors statusbar.bg green magenta blue yellow
-        Then colors.statusbar.normal.bg should be blue
+        Then colors.statusbar.normal.bg should be set to blue
 
     Scenario: Cycling an option through the end of the list
         When I run :set colors statusbar.bg yellow
         And I run :set colors statusbar.bg green magenta blue yellow
-        Then colors.statusbar.normal.bg should be green
+        Then colors.statusbar.normal.bg should be set to green
 
     Scenario: Cycling an option that's not on the list
         When I run :set colors statusbar.bg red
         And I run :set colors statusbar.bg green magenta blue yellow
-        Then colors.statusbar.normal.bg should be green
+        Then colors.statusbar.normal.bg should be set to green
 
     Scenario: Cycling through a single option
         When I run :set colors statusbar.bg red
         And I run :set colors statusbar.bg red
-        Then colors.statusbar.normal.bg should be red
+        Then colors.statusbar.normal.bg should be set to red
 
     Scenario: Getting an option
         When I run :set colors statusbar.bg magenta
@@ -68,7 +68,7 @@ Feature: Setting settings.
         # We don't actually check if the option is temporary as this isn't easy
         # to check.
         When I run :set -t colors statusbar.bg green
-        Then colors.statusbar.normal.bg should be green
+        Then colors.statusbar.normal.bg should be set to green
 
     # qute://settings isn't actually implemented on QtWebEngine, but this works
     # (and displays a page saying it's not available)
@@ -79,7 +79,7 @@ Feature: Setting settings.
             - qute://settings (active)
 
     Scenario: Focusing input fields in qute://settings and entering valid value
-        When I set ignore_case to false
+        When I set ignore_case to never
         And I open qute://settings
         # scroll to the right - the table does not fit in the default screen
         And I run :scroll-perc -x 100
@@ -90,7 +90,7 @@ Feature: Setting settings.
         And I press the key "<Escape>"
         # an explicit Tab to unfocus the input field seems to stabilize the tests
         And I press the key "<Tab>"
-        Then ignore-case should be true
+        Then ignore-case should be set to true
 
     Scenario: Focusing input fields in qute://settings and entering invalid value
         When I open qute://settings
@@ -106,33 +106,17 @@ Feature: Setting settings.
         Then "Invalid value 'foo' *" should be logged
 
     Scenario: Empty option with ? (issue 1109)
-        When I run :set general ?
-        Then the error "set: The following arguments are required: value" should be shown
-
-    Scenario: Invalid section and empty option with ? (issue 1109)
-        When I run :set blah ?
+        When I run :set ?
         Then the error "set: The following arguments are required: value" should be shown
 
     Scenario: Invalid option with ? (issue 1109)
-        When I run :set general foo?
+        When I run :set foo?
         Then the error "set: No option 'foo' in section 'general'" should be shown
-
-    Scenario: Invalid section/option with ? (issue 1109)
-        When I run :set blah foo ?
-        Then the error "set: Section 'blah' does not exist!" should be shown
 
     Scenario: Empty option with !
         When I run :set general !
         Then the error "set: The following arguments are required: value" should be shown
 
-    Scenario: Invalid section and empty option with !
-        When I run :set blah !
-        Then the error "set: The following arguments are required: value" should be shown
-
     Scenario: Invalid option with !
-        When I run :set general foo!
+        When I run :set foo!
         Then the error "set: No option 'foo' in section 'general'" should be shown
-
-    Scenario: Invalid section/option with !
-        When I run :set blah foo !
-        Then the error "set: Section 'blah' does not exist!" should be shown
