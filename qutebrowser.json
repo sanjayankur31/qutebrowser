@@ -4,8 +4,9 @@
     "runtime": "org.kde.Platform",
     "runtime-version": "master",
     "sdk": "org.kde.Sdk",
-    "command": "qutebrowser --backend webengine",
+    "command": "qutebrowser",
     "tags": ["nightly"],
+    "rename-desktop-file": "qutebrowser.desktop",
     "desktop-file-name-prefix": "(Nightly)",
     "finish-args": ["--share=ipc", "--share=network", "--socket=x11", "--socket=wayland", "--filesystem=host", "--env=QT_QPA_PLATFORM=flatpak" ],
     "modules": [
@@ -71,7 +72,6 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "cleanup": ["*"],
             "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
             "sources": [
                  {
@@ -86,7 +86,6 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "cleanup": ["*"],
             "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
             "sources": [
                  {
@@ -101,7 +100,6 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "cleanup": ["*"],
             "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
             "sources": [
                  {
@@ -116,9 +114,8 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "cleanup": ["*"],
             "build-commands": [ 
-                "PATH=$PATH:/usr/bin/ PYTHONPATH=/usr/lib/python3.5/site-packages/ python3 configure.py --assume-shared --confirm-license --sysroot=/app -w --sip=/usr/bin/sip", 
+                "PATH=$PATH:/usr/bin/ PYTHONPATH=/usr/lib/python3.5/site-packages/ python3 configure.py --assume-shared --confirm-license --sysroot=/app -w --sip=/app/usr/bin/sip --sip-incdir=/app/usr/include/python3.5m/ -verbose QMAKE_CFLAGS_RELEASE='-I/usr/include/python3.5m/' QMAKE_CXXFLAGS_RELEASE='-I/usr/include/python3.5m/'", 
                 "make", "make install DESTDIR=/app INSTALL_ROOT=/app"
             ],
             "sources": [
@@ -135,7 +132,7 @@
                     "buildsystem": "simple",
                     "cleanup": ["*"],
                     "build-options": {
-                        "cflags" : "-I/usr/include/python3.6m/"
+                        "cflags" : "-I/usr/include/python3.5m/"
                     },
                     "build-commands": [ 
                         "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 configure.py -b /usr/bin/ --static", 
@@ -154,6 +151,12 @@
         {
             "name": "setuptools",
             "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "build-commands": [ 
+                "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", 
+                "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build"
+            ],
             "sources": [
                  {
                      "type": "archive",
@@ -165,7 +168,15 @@
         {
             "name": "qutebrowser",
             "buildsystem": "simple",
-            "build-commands": [ "python3 setup.py install --root=/app" ],
+            "build-options": {
+                "no-debuginfo": false
+            },
+            "comment": "COMMENT: Cant get the icon to install properly.",
+            "build-commands": [
+                "python3 setup.py install --root=/app",
+                "install -v -D qutebrowser.desktop -t /app/share/applications/",
+                "mv /app/usr/bin* /app/bin -v"
+            ],
             "sources": [ {"type": "git", "url": "https://github.com/qutebrowser/qutebrowser.git" } ]
         }
     ]

@@ -44,3 +44,4 @@ TODO
 /scripts/dev/pylint_checkers/qute_pylint.egg-info
 flatpak/
 .flatpak-builder/
+flatpak-repo/
