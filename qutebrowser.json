@@ -1,0 +1,174 @@
+{
+    "id": "org.qutebrowser.desktop",
+    "branch": "master",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "master",
+    "sdk": "org.kde.Sdk",
+    "command": "qutebrowser --backend webengine",
+    "tags": ["nightly"],
+    "desktop-file-name-prefix": "(Nightly)",
+    "finish-args": ["--share=ipc", "--share=network", "--socket=x11", "--socket=wayland", "--filesystem=host", "--env=QT_QPA_PLATFORM=flatpak" ],
+    "modules": [
+        {
+            "name": "jinja",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "https://pypi.python.org/packages/90/61/f820ff0076a2599dd39406dcb858ecb239438c02ce706c8e91131ab9c7f1/Jinja2-2.9.6.tar.gz",
+                     "sha256": "ddaa01a212cd6d641401cb01b605f4a4d9f37bfc93043d7f760ec70fb99ff9ff"
+                 }
+            ],
+            "modules": [
+                {
+                    "name": "pytest",
+                    "no-autogen": true,
+                    "buildsystem": "simple",
+                    "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+                    "cleanup": ["*"],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://pypi.python.org/packages/72/2b/2d3155e01f45a5a04427857352ee88220ee39550b2bc078f9db3190aea46/pytest-3.1.2.tar.gz",
+                            "sha256": "795ec29fbba70b22a593691ce8bcd4bdde2dc96e8099731f73c7d8bb3ce879bf"
+                        }
+                    ],
+                    "modules": [
+                        {
+                            "name": "setuptools-scm",
+                            "no-autogen": true,
+                            "buildsystem": "simple",
+                            "cleanup": ["*"],
+                            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+                            "sources": [
+                                {
+                                    "type": "archive",
+                                    "url": "https://pypi.python.org/packages/03/6d/aafdd01edd227ee879b691455bf19895091872af7e48192bea1758c82032/setuptools_scm-1.15.6.tar.gz",
+                                    "sha256": "49ab4685589986a42da85706b3311a2f74f1af567d39fee6cb1e088d7a75fb5f"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "yaml",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "http://pyyaml.org/download/libyaml/yaml-0.1.7.zip",
+                     "sha256": "bd16d734a82ccc806eab7784b3a97ee4773daf359496b298968fc2eedc3d1b19"
+                 }
+            ]
+        },
+        {
+            "name": "pygments",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "cleanup": ["*"],
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "https://pypi.python.org/packages/71/2a/2e4e77803a8bd6408a2903340ac498cb0a2181811af7c9ec92cb70b0308a/Pygments-2.2.0.tar.gz",
+                     "sha256": "dbae1046def0efb574852fab9e90209b23f556367b5a320c0bcb871c77c3e8cc"
+                 }
+            ]
+        },
+        {
+            "name": "peg2",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "cleanup": ["*"],
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "https://pypi.python.org/packages/f9/bd/10398e2c2d2070cc8a9c7153abfbd4ddb2895a2c52a32722ab8689e0cc7d/pyPEG2-2.15.2.tar.gz",
+                     "sha256": "2b2d4f80d8e1a9370b2a91f4a25f4abf7f69b85c8da84cd23ec36451958a1f6d"
+                 }
+            ]
+        },
+        {
+            "name": "cssutils",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "cleanup": ["*"],
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "https://pypi.python.org/packages/5c/0b/c5f29d29c037e97043770b5e7c740b6252993e4b57f029b3cd03c78ddfec/cssutils-1.0.2.tar.gz",
+                     "sha256": "a2fcf06467553038e98fea9cfe36af2bf14063eb147a70958cfcaa8f5786acaf"
+                 }
+            ]
+        },
+        {
+            "name": "pyqt5",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "cleanup": ["*"],
+            "build-commands": [ 
+                "PATH=$PATH:/usr/bin/ PYTHONPATH=/usr/lib/python3.5/site-packages/ python3 configure.py --assume-shared --confirm-license --sysroot=/app -w --sip=/usr/bin/sip", 
+                "make", "make install DESTDIR=/app INSTALL_ROOT=/app"
+            ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.8.2/PyQt5_gpl-5.8.2.tar.gz",
+                     "sha256": "ebd70515b30bbd6098fee29e6271a6696b1183c5530ee30e6ba9aaab195536e8"
+                 }
+            ],
+            "modules": [
+                {
+                    "name": "sip",
+                    "no-autogen": true,
+                    "buildsystem": "simple",
+                    "cleanup": ["*"],
+                    "build-options": {
+                        "cflags" : "-I/usr/include/python3.6m/"
+                    },
+                    "build-commands": [ 
+                        "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 configure.py -b /usr/bin/ --static", 
+                        "make", "make install DESTDIR=/app"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://sourceforge.net/projects/pyqt/files/sip/sip-4.19.2/sip-4.19.2.tar.gz",
+                            "sha256": "432b4aad25254e6997913e33b1ca3cf5fd21d5729a50a3ce2edccbea82c80533"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "setuptools",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "https://pypi.python.org/packages/a9/23/720c7558ba6ad3e0f5ad01e0d6ea2288b486da32f053c73e259f7c392042/setuptools-36.0.1.zip",
+                     "sha256": "e17c4687fddd6d70a6604ac0ad25e33324cec71b5137267dd5c45e103c4b288a"
+                 }
+            ]
+        },
+        {
+            "name": "qutebrowser",
+            "buildsystem": "simple",
+            "build-commands": [ "python3 setup.py install --root=/app" ],
+            "sources": [ {"type": "git", "url": "https://github.com/qutebrowser/qutebrowser.git" } ]
+        }
+    ]
+}
+
+
