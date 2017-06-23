@@ -15,7 +15,7 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
             "sources": [
                  {
                      "type": "archive",
@@ -28,7 +28,7 @@
                     "name": "pytest",
                     "no-autogen": true,
                     "buildsystem": "simple",
-                    "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+                    "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
                     "cleanup": ["*"],
                     "sources": [
                         {
@@ -43,7 +43,7 @@
                             "no-autogen": true,
                             "buildsystem": "simple",
                             "cleanup": ["*"],
-                            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+                            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
                             "sources": [
                                 {
                                     "type": "archive",
@@ -72,7 +72,7 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
             "sources": [
                  {
                      "type": "archive",
@@ -86,7 +86,7 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
             "sources": [
                  {
                      "type": "archive",
@@ -100,7 +100,7 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build" ],
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
             "sources": [
                  {
                      "type": "archive",
@@ -153,10 +153,7 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "build-commands": [ 
-                "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py build", 
-                "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 setup.py install --root=/app --skip-build"
-            ],
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
             "sources": [
                  {
                      "type": "archive",
