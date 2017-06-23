@@ -8,7 +8,11 @@
     "tags": ["nightly"],
     "rename-desktop-file": "qutebrowser.desktop",
     "desktop-file-name-prefix": "(Nightly)",
-    "finish-args": ["--share=ipc", "--share=network", "--socket=x11", "--socket=wayland", "--filesystem=host", "--env=QT_QPA_PLATFORM=flatpak" ],
+    "finish-args": [
+        "--share=ipc", "--share=network", "--socket=x11", "--socket=wayland",
+        "--filesystem=host", "--env=QT_QPA_PLATFORM=flatpak",
+        "--env=PYTHONPATH=/app/usr/lib/python3.5/site-packages/" 
+    ],
     "modules": [
         {
             "name": "jinja",
@@ -57,13 +61,30 @@
             ]
         },
         {
-            "name": "yaml",
+            "name": "markupsafe",
             "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
             "sources": [
                  {
                      "type": "archive",
-                     "url": "http://pyyaml.org/download/libyaml/yaml-0.1.7.zip",
-                     "sha256": "bd16d734a82ccc806eab7784b3a97ee4773daf359496b298968fc2eedc3d1b19"
+                     "url": "https://pypi.python.org/packages/4d/de/32d741db316d8fdb7680822dd37001ef7a448255de9699ab4bfcbdf4172b/MarkupSafe-1.0.tar.gz",
+                     "sha256": "a6be69091dac236ea9c6bc7d012beab42010fa914c459791d627dad4910eb665"
+                 }
+            ]
+        },
+        {
+            "name": "yaml",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "http://pyyaml.org/download/pyyaml/PyYAML-3.12.tar.gz",
+                     "sha256": "592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab"
                  }
             ]
         },
@@ -78,6 +99,34 @@
                      "type": "archive",
                      "url": "https://pypi.python.org/packages/71/2a/2e4e77803a8bd6408a2903340ac498cb0a2181811af7c9ec92cb70b0308a/Pygments-2.2.0.tar.gz",
                      "sha256": "dbae1046def0efb574852fab9e90209b23f556367b5a320c0bcb871c77c3e8cc"
+                 }
+            ]
+        },
+        {
+            "name": "colorama",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "https://pypi.python.org/packages/e6/76/257b53926889e2835355d74fec73d82662100135293e17d382e2b74d1669/colorama-0.3.9.tar.gz",
+                     "sha256": "48eb22f4f8461b1df5734a074b57042430fb06e1d61bd1e11b078c0fe6d7a1f1"
+                 }
+            ]
+        },
+        {
+            "name": "pyopengl",
+            "config-opts": [ "--disable-static", "--enable-x11" ],
+            "no-autogen": true,
+            "buildsystem": "simple",
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
+            "sources": [
+                 {
+                     "type": "archive",
+                     "url": "https://pypi.python.org/packages/f0/d6/daabe9beb313c0f40225e179f92d5faf8f0557213d75ff52b9b759f5d1c9/PyOpenGL-3.1.1a1.zip",
+                     "sha256": "fc9b6b95776f4cd1da9e4e9fe45a85c995fc8490154cbac1031ed54e0465dc92"
                  }
             ]
         },
@@ -115,7 +164,7 @@
             "no-autogen": true,
             "buildsystem": "simple",
             "build-commands": [ 
-                "PATH=$PATH:/usr/bin/ PYTHONPATH=/usr/lib/python3.5/site-packages/ python3 configure.py --assume-shared --confirm-license --sysroot=/app -w --sip=/app/usr/bin/sip --sip-incdir=/app/usr/include/python3.5m/ -verbose QMAKE_CFLAGS_RELEASE='-I/usr/include/python3.5m/' QMAKE_CXXFLAGS_RELEASE='-I/usr/include/python3.5m/'", 
+                "PATH=$PATH:/usr/bin/ PYTHONPATH=/usr/lib/python3.5/site-packages/ python3 configure.py -d /usr/lib/python3.5/site-packages/ --assume-shared --confirm-license --sysroot=/app -w --sip=/app/usr/bin/sip --sip-incdir=/app/usr/include/python3.5m/ -verbose QMAKE_CFLAGS_RELEASE='-I/usr/include/python3.5m/' QMAKE_CXXFLAGS_RELEASE='-I/usr/include/python3.5m/'", 
                 "make", "make install DESTDIR=/app INSTALL_ROOT=/app"
             ],
             "sources": [
@@ -130,12 +179,11 @@
                     "name": "sip",
                     "no-autogen": true,
                     "buildsystem": "simple",
-                    "cleanup": ["*"],
                     "build-options": {
                         "cflags" : "-I/usr/include/python3.5m/"
                     },
                     "build-commands": [ 
-                        "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 configure.py -b /usr/bin/ --static", 
+                        "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ python3 configure.py -b /usr/bin/ -d /usr/lib/python3.5/site-packages/", 
                         "make", "make install DESTDIR=/app"
                     ],
                     "sources": [
@@ -153,7 +201,7 @@
             "config-opts": [ "--disable-static", "--enable-x11" ],
             "no-autogen": true,
             "buildsystem": "simple",
-            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --root /app ." ],
+            "build-commands": [ "PYTHONPATH=/app/usr/lib/python3.5/site-packages/ pip3 install --no-dependencies --ignore-installed --root /app ." ],
             "sources": [
                  {
                      "type": "archive",
