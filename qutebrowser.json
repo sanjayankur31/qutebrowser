@@ -11,7 +11,8 @@
     "finish-args": [
         "--share=ipc", "--share=network", "--socket=x11", "--socket=wayland",
         "--filesystem=host", "--env=QT_QPA_PLATFORM=flatpak",
-        "--env=PYTHONPATH=/app/usr/lib/python3.5/site-packages/" 
+        "--env=PYTHONPATH=/app/usr/lib/python3.5/site-packages/" ,
+        "--env=QTWEBENGINE_DISABLE_SANDBOX=1"
     ],
     "modules": [
         {
